@@ -1,10 +1,7 @@
 package com.course.controller;
 
 import com.course.model.Shipwreck;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,17 +20,17 @@ public class ShipwreckController {
     }
 
     @RequestMapping(value = "shipwrecks/{id}", method = RequestMethod.GET)
-    public Shipwreck get(@RequestBody Long id){
+    public Shipwreck get(@PathVariable Long id){
         return ShipwreckStub.get(id);
     }
 
     @RequestMapping(value = "shipwrecks/{id}", method = RequestMethod.PUT)
-    public Shipwreck update(@RequestBody Long id, @RequestBody Shipwreck wreck){
+    public Shipwreck update(@PathVariable Long id, @RequestBody Shipwreck wreck){
         return ShipwreckStub.update(id, wreck);
     }
 
     @RequestMapping(value = "shipwrecks/{id}", method = RequestMethod.DELETE)
-    public Shipwreck delete(@RequestBody Long id){
+    public Shipwreck delete(@PathVariable Long id){
         return ShipwreckStub.delete(id);
     }
 
