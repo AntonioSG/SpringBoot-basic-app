@@ -1,16 +1,17 @@
 package com.course;
 
+import com.course.controller.HomeControler;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+import static org.junit.Assert.assertEquals;
+
 public class ShipwrecksApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	public void testapp() {
+		HomeControler homeControler = new HomeControler();
+		String result = homeControler.home();
+		assertEquals(result, "Das boot, repository for duty");
 	}
 
 }
