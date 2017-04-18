@@ -1,6 +1,9 @@
 package com.course.controller;
 
 import com.course.model.Shipwreck;
+import com.course.repository.ShipwreckRepository;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,29 +12,36 @@ import java.util.List;
 @RequestMapping("api/v1/")
 public class ShipwreckController {
 
+    @Autowired
+    private ShipwreckRepository shipwreckRepository;
+
     @RequestMapping(value = "shipwrecks", method = RequestMethod.GET)
     public List<Shipwreck> list(){
-        return ShipwreckStub.list();
+        return shipwreckRepository.findAll();
     }
 
     @RequestMapping(value = "shipwrecks", method = RequestMethod.POST)
     public Shipwreck create(@RequestBody Shipwreck wreck){
-        return ShipwreckStub.create(wreck);
+        return shipwreckRepository.saveAndFlush(wreck);
     }
 
     @RequestMapping(value = "shipwrecks/{id}", method = RequestMethod.GET)
     public Shipwreck get(@PathVariable Long id){
-        return ShipwreckStub.get(id);
+        return shipwreckRepository.findOne(id);
     }
 
     @RequestMapping(value = "shipwrecks/{id}", method = RequestMethod.PUT)
     public Shipwreck update(@PathVariable Long id, @RequestBody Shipwreck wreck){
-        return ShipwreckStub.update(id, wreck);
+        Shipwreck existingShipwreck = shipwreckRepository.findOne(id);
+        BeanUtils.copyProperties(wreck, existingShipwreck);
+        return shipwreckRepository.saveAndFlush(existingShipwreck);
     }
 
     @RequestMapping(value = "shipwrecks/{id}", method = RequestMethod.DELETE)
     public Shipwreck delete(@PathVariable Long id){
-        return ShipwreckStub.delete(id);
+        Shipwreck existingShipwreck = shipwreckRepository.findOne(id);
+        shipwreckRepository.delete(existingShipwreck);
+        return existingShipwreck;
     }
 
 }
